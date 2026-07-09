@@ -1,0 +1,8 @@
+{
+  "name": "my-hello-world",
+  "private": true,
+  "scripts": {
+    "web": "npm --prefix apps/web run dev",
+    "mobile": "npm --prefix apps/mobile run start"
+  }
+}
