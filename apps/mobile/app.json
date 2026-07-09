@@ -21,6 +21,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "27d0fad5-8311-4ffc-ba6d-5a78ab26b7cc"
+      }
+    },
+    "owner": "skaijar"
   }
 }
