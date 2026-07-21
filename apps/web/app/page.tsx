@@ -1,8 +1,21 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./providers";
+
 export default function Home() {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoading) return;
+    router.replace(user ? "/dashboard" : "/login");
+  }, [isLoading, user, router]);
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      <h1 className="text-6xl font-bold text-gray-900">Hello World</h1>
-      <p className="mt-4 text-xl text-gray-500">my_hello_world — Web</p>
+    <main className="min-h-screen flex items-center justify-center bg-gray-50">
+      <p className="text-gray-400 text-sm">Loading…</p>
     </main>
   );
 }

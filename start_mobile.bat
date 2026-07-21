@@ -1,0 +1,9 @@
+@echo off
+echo Starting Pixel 8 AVD...
+start "" "C:\Users\saifuddi\AppData\Local\Android\Sdk\emulator\emulator.exe" -avd Pixel_8
+
+echo Waiting 30 seconds for emulator to boot...
+timeout /t 30 /nobreak
+
+echo Starting Expo...
+start cmd /k "cd /d C:\Users\saifuddi\Workspace\my_hello_world\apps\mobile && npx expo start --android --clear"
