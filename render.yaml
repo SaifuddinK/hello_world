@@ -1,0 +1,60 @@
+services:
+  # Django REST API
+  - type: web
+    name: stockticker-api
+    runtime: python
+    rootDir: apps/api
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DB_HOST
+        fromDatabase:
+          name: stockticker-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: stockticker-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: stockticker-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: stockticker-db
+          property: password
+      - key: DB_PORT
+        fromDatabase:
+          name: stockticker-db
+          property: port
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://stockticker-web.onrender.com"
+
+  # Next.js Web App
+  - type: web
+    name: stockticker-web
+    runtime: node
+    rootDir: apps/web
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    envVars:
+      - key: NODE_VERSION
+        value: 20.0.0
+      - key: NEXT_PUBLIC_API_URL
+        value: "https://stockticker-api.onrender.com"
+      - key: PORT
+        value: 3000
+
+databases:
+  - name: stockticker-db
+    databaseName: stockticker
+    user: stockticker
+    plan: free
