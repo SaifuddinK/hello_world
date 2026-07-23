@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: stockticker
+      POSTGRES_USER: stockticker
+      POSTGRES_PASSWORD: stockticker_db_2024
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build: ./apps/api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production-please}
+      DEBUG: "False"
+      ALLOWED_HOSTS: "192.168.0.198,localhost,127.0.0.1"
+      DB_HOST: db
+      DB_NAME: stockticker
+      DB_USER: stockticker
+      DB_PASSWORD: stockticker_db_2024
+      DB_PORT: "5432"
+      CORS_ALLOWED_ORIGINS: "http://192.168.0.166:3000,http://192.168.0.166"
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        NEXT_PUBLIC_API_URL: http://192.168.0.198:8000
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
