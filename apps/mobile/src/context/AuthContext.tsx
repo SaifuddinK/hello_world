@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE = 'http://10.0.2.2:8000'; // Android emulator loopback to host
+const API_BASE = 'https://reply-ali-exhibit-passes.trycloudflare.com'; // Pi 1 Cloudflare tunnel
 
 export interface User {
   id: number;
