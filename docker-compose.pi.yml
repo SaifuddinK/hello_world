@@ -23,16 +23,5 @@ services:
     depends_on:
       - db
 
-  web:
-    build:
-      context: ./apps/web
-      args:
-        NEXT_PUBLIC_API_URL: http://192.168.0.198:8000
-    restart: always
-    ports:
-      - "3000:3000"
-    depends_on:
-      - api
-
 volumes:
   postgres_data:
