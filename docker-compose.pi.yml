@@ -18,16 +18,8 @@ services:
     restart: always
     ports:
       - "8000:8000"
-    environment:
-      SECRET_KEY: ${SECRET_KEY:-change-me-in-production-please}
-      DEBUG: "False"
-      ALLOWED_HOSTS: "192.168.0.198,localhost,127.0.0.1"
-      DB_HOST: db
-      DB_NAME: stockticker
-      DB_USER: stockticker
-      DB_PASSWORD: stockticker_db_2024
-      DB_PORT: "5432"
-      CORS_ALLOWED_ORIGINS: "http://192.168.0.166:3000,http://192.168.0.166"
+    env_file:
+      - ./apps/api/.env.pi
     depends_on:
       - db
 
